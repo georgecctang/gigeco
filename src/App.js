@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { useState } from 'react';
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import Error from './components/Error';
 
 function App() {
+
+  const [isLogin, setIsLogin] = useState(false);
+  // const [showLogin, setShowLogin] = useState(true);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Navbar />
+      <Switch>
+        <Route exact path="/">{isLogin ? <Home />: <Redirect to='/login' />}</Route>
+        <Route exact path="/login">{isLogin ? <Home /> : <Login/>}</Route>
+        <Route exact path="/signup">{isLogin ? <Home /> : <Signup />}</Route>
+        <Route component={Error} />
+      </Switch>
+    </>
   );
 }
 
